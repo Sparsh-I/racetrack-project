@@ -1,0 +1,2 @@
+C:\Users\spars\Downloads\Game Dev\racetrack-project\racetrack-project\Racetrack Project\obj\Debug\Assembly-CSharp.csproj.AssemblyReference.cache
+C:\Users\spars\Downloads\Game Dev\racetrack-project\racetrack-project\Racetrack Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
