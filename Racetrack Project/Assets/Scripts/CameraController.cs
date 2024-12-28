@@ -5,24 +5,39 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private GameObject _player;
-    private GameObject _child;
-    [SerializeField] private float speed;
-
-    private void Awake()
-    {
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _child = _player.transform.Find("CameraConstraint").gameObject;
-    }
+    public float moveSmoothness;
+    public float rotSmoothness;
+    
+    public Vector3 moveOffset;
+    public Vector3 rotOffset;
+    
+    public Transform target;
 
     private void FixedUpdate()
     {
-        Follow();
+        FollowTarget();
     }
 
-    private void Follow()
+    private void FollowTarget()
     {
-        gameObject.transform.position = Vector3.Lerp(transform.position, _child.transform.position, Time.deltaTime * speed);
-        gameObject.transform.LookAt(_player.gameObject.transform);
+        HandleMovement();
+        HandleRotation();
+    }
+    
+    private void HandleMovement()
+    {
+        Vector3 targetPos = new Vector3();
+        targetPos = target.TransformPoint(moveOffset);
+        
+        transform.position = Vector3.Lerp(transform.position, targetPos, moveSmoothness * Time.deltaTime);
+    }
+
+    private void HandleRotation()
+    {
+        var direction = target.position - transform.position;
+        var rotation = new Quaternion();
+        rotation = Quaternion.LookRotation(direction + rotOffset, Vector3.up);
+        
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotSmoothness * Time.deltaTime);
     }
 }
