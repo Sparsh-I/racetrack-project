@@ -12,6 +12,8 @@ public class CameraController : MonoBehaviour
     public Vector3 rotOffset;
     
     public Transform target;
+    
+    public float minHeightAboveTarget = 2f;
 
     private void FixedUpdate()
     {
@@ -26,8 +28,8 @@ public class CameraController : MonoBehaviour
     
     private void HandleMovement()
     {
-        Vector3 targetPos = new Vector3();
-        targetPos = target.TransformPoint(moveOffset);
+        Vector3 targetPos = target.TransformPoint(moveOffset);
+        targetPos.y = Mathf.Max(targetPos.y, target.position.y + minHeightAboveTarget);
         
         transform.position = Vector3.Lerp(transform.position, targetPos, moveSmoothness * Time.deltaTime);
     }
@@ -35,8 +37,7 @@ public class CameraController : MonoBehaviour
     private void HandleRotation()
     {
         var direction = target.position - transform.position;
-        var rotation = new Quaternion();
-        rotation = Quaternion.LookRotation(direction + rotOffset, Vector3.up);
+        var rotation = Quaternion.LookRotation(direction + rotOffset, Vector3.up);
         
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotSmoothness * Time.deltaTime);
     }
