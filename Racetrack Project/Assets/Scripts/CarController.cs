@@ -19,10 +19,12 @@ public class CarController : MonoBehaviour
         public Axel axel;
     }
 
-    public float maxAcceleration = 30f;
-    public float brakeAcceleration = 50f;
+    // acceleration
+    public float maxAcceleration = 50f;
+    public float brakeAcceleration = 200f;
     
-    public float turnSensitivity = 1f;
+    // steering
+    public float turnSensitivity = 2f;
     public float maxSteerAngle = 30f;
 
     public Vector3 centreOfMass;
@@ -31,6 +33,7 @@ public class CarController : MonoBehaviour
 
     private float _moveInput;
     private float _steerInput;
+    [SerializeField] private float direction = -1;
 
     private Rigidbody _carRb;
 
@@ -63,7 +66,7 @@ public class CarController : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
-            wheel.wheelCollider.motorTorque = _moveInput * 600 * maxAcceleration * Time.deltaTime;
+            wheel.wheelCollider.motorTorque = direction * _moveInput * 600 * maxAcceleration * Time.deltaTime;
         }
     }
 
