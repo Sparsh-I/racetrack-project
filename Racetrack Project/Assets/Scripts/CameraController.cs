@@ -11,10 +11,16 @@ public class CameraController : MonoBehaviour
     public Vector3 moveOffset;
     public Vector3 rotOffset;
     
+    public LoadVehicle loadVehicle;
     public Transform target;
     
     public float minHeightAboveTarget = 2f;
 
+    private void Start()
+    {
+        target = loadVehicle.GetTransform();
+    }
+    
     private void FixedUpdate()
     {
         FollowTarget();
